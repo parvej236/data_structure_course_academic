@@ -1,56 +1,85 @@
+# =====================
 # Prerequisites
+# =====================
 *.d
 
-# Compiled Object files
-*.slo
-*.lo
+# =====================
+# Compiled Object Files
+# =====================
 *.o
 *.obj
+*.lo
+*.slo
+*.s
 
+# =====================
 # Precompiled Headers
+# =====================
 *.gch
 *.pch
 
-# Compiled Dynamic libraries
+# =====================
+# Compiled Libraries
+# =====================
+# Dynamic libraries
 *.so
 *.dylib
 *.dll
 
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
+# Static libraries
 *.a
 *.lib
+*.la
+*.lai
 
+# =====================
 # Executables
+# =====================
 *.exe
 *.out
 *.app
 
-# VS Code specific files
-.vscode/
-*.code-workspace
-
-# Build directories
+# =====================
+# Build & Run Artifacts
+# =====================
 build/
+bin/
+dist/
 debug/
 release/
+out/
 
-# CMake build directories
+# Runtime-generated files
+*.log
+*.tmp
+*.cache
+core
+core.*
+
+# =====================
+# CMake
+# =====================
 CMakeFiles/
 CMakeCache.txt
 cmake_install.cmake
+CTestTestfile.cmake
+Makefile
 
-# IDE specific files
+# =====================
+# IDE / Editor Files
+# =====================
+.vscode/
+*.code-workspace
 .idea/
 *.swp
 *~
+*.user
+*.suo
+*.userprefs
 
-# OS specific files
+# =====================
+# OS-specific Files
+# =====================
 .DS_Store
 .DS_Store?
 ._*
@@ -59,7 +88,10 @@ cmake_install.cmake
 ehthumbs.db
 Thumbs.db
 
-# User-specific files
-*.user
-*.suo
-*.userprefs
+# =====================
+# Sanitizers / Profiling
+# =====================
+*.prof
+*.gcda
+*.gcno
+*.gcov

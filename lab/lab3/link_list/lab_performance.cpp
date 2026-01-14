@@ -121,6 +121,20 @@ int search_sort(node **start, int key) {
     return idx;
 }
 
+int problem1(node **start) {
+    node *ptr = *start;
+
+    int cnt = 0;
+
+    while(ptr->link != NULL) {
+        if((ptr->link->info < ptr->info && ptr->link->link->info < ptr->info) || (ptr->link->info > ptr->info && ptr->link->link->info > ptr->info)) {
+            cnt++;
+        }
+        ptr = ptr->link;    
+    }
+    return cnt;
+}
+
 void showlist(node *start)
 {
     node *ptr = start;
@@ -158,4 +172,3 @@ int main()
     cout << "Search at pos: " << search_sort(&start, 35) << endl;
 
 }
-
