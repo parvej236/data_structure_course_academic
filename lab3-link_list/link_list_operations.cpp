@@ -82,7 +82,7 @@ void delete_pos(node **start, int pos) {
 void delete_item(node **start, int data) {
     node *ptr = *start;
 
-    while(ptr->link->info < data) {
+    while(ptr->link->info != data) {
         ptr = ptr->link;
     }
 
@@ -151,9 +151,9 @@ int main()
     node *start = NULL;
 
     insert_beg(&start, 40);
+    insert_beg(&start, 100);
     insert_beg(&start, 30);
-    insert_beg(&start, 20);
-    insert_beg(&start, 10);
+    insert_beg(&start, 60);
 
     showlist(start);
 
