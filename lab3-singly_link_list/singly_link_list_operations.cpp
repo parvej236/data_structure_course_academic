@@ -7,6 +7,35 @@ struct node
     node *link;
 };
 
+int search_unsort(node **start, int key) {
+    node *ptr = *start;
+    int idx = 0;
+
+    while(ptr != NULL) {
+        if(ptr->info == key) {
+            return idx;
+        }
+        ptr = ptr->link;
+        idx++;
+    }
+return -1;
+}
+
+int search_sort(node **start, int key) {
+    int idx = 0;
+
+    node *ptr = *start;
+    while(ptr != nullptr && ptr->info <= key)
+    {
+        if(ptr->info == key) {
+            return idx;
+        }
+        ptr = ptr->link;
+        idx++;
+    }
+    return -1;
+}
+
 void insert_beg(node **start, int data)
 {
     node *newnode = new (nothrow) node;
@@ -145,50 +174,6 @@ void delete_item(node **start, int data) {
     node *deleteNode = ptr->link;
     ptr->link = ptr->link->link;
     delete(deleteNode);
-}
-
-
-int search_unsort(node **start, int key) {
-    node *ptr = *start;
-    int idx = 0;
-
-    while(ptr != NULL) {
-        if(ptr->info == key) {
-            return idx;
-        }
-        ptr = ptr->link;
-        idx++;
-    }
-return -1;
-}
-
-int search_sort(node **start, int key) {
-    int idx = 0;
-
-    node *ptr = *start;
-    while(ptr != nullptr && ptr->info <= key)
-    {
-        if(ptr->info == key) {
-            return idx;
-        }
-        ptr = ptr->link;
-        idx++;
-    }
-    return -1;
-}
-
-int problem1(node **start) {
-    node *ptr = *start;
-
-    int cnt = 0;
-
-    while(ptr->link != NULL) {
-        if((ptr->link->info < ptr->info && ptr->link->link->info < ptr->info) || (ptr->link->info > ptr->info && ptr->link->link->info > ptr->info)) {
-            cnt++;
-        }
-        ptr = ptr->link;    
-    }
-    return cnt;
 }
 
 void showlist(node *start)
