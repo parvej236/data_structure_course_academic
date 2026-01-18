@@ -21,25 +21,6 @@ This repository contains comprehensive implementations of various data structure
 
 [Download PDF](https://gnindia.dronacharya.info/IT/3rdSem/Downloads/DataStructure/Books/DATA-STRUCTURE-BOOK-3.pdf)
 
-## Requirements
-
-- C++ compiler (GCC/G++ recommended)
-- Basic knowledge of C++ programming
-- Understanding of data structure concepts
-
-## How to Compile and Run
-
-To compile any of the programs, use the following command:
-```bash
-g++ -o output_name source_file.cpp
-```
-
-For example:
-```bash
-g++ -o array_operations lab1-array/1_array_operatoins.cpp
-./array_operations
-```
-
 ## Lab Overview
 
 ### Lab 1: Array Operations
