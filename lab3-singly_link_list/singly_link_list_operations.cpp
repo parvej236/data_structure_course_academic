@@ -110,7 +110,7 @@ int search_sort(node **start, int key) {
     int idx = 0;
 
     node *ptr = *start;
-    while(ptr->info < key)
+    while(ptr != nullptr && ptr->info <= key)
     {
         if(ptr->info == key) {
             return idx;
@@ -118,7 +118,7 @@ int search_sort(node **start, int key) {
         ptr = ptr->link;
         idx++;
     }
-    return idx;
+    return -1;
 }
 
 int problem1(node **start) {
