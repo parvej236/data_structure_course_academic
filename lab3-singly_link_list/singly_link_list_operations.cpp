@@ -9,7 +9,12 @@ struct node
 
 void insert_beg(node **start, int data)
 {
-    node *newnode = new node;
+    node *newnode = new (nothrow) node;
+    
+    if(newnode == nullptr) {
+        cout << "Overflow: Memory not available" << endl;
+        return;
+    }
     newnode->info = data;
     newnode->link = *start;
     *start = newnode;
@@ -17,7 +22,11 @@ void insert_beg(node **start, int data)
 
 void insert_end(node **start, int data)
 {
-    node *newnode = new node;
+    node *newnode = new (nothrow) node;
+    if(newnode == nullptr) {
+        cout << "Overflow: Memory not available" << endl;
+        return;
+    }
     newnode->info = data;
 
     node *ptr = *start;
@@ -32,14 +41,17 @@ void insert_end(node **start, int data)
 
 void insert_position(node **start, int data, int pos)
 {
-
     if (pos < 0)
     {
         cout << "invalid" << endl;
         return;
     }
 
-    node *newnode = new node;
+    node *newnode = new (nothrow) node;
+    if(newnode == nullptr) {
+        cout << "Overflow: Memory not available" << endl;
+        return;
+    }
     newnode->info = data;
 
     node *ptr = *start;
@@ -54,7 +66,11 @@ void insert_position(node **start, int data, int pos)
 
 void insert_sorted(node **start, int data)
 {
-    node *newnode = new node;
+    node *newnode = new (nothrow) node;
+    if(newnode == nullptr) {
+        cout << "Overflow: Memory not available" << endl;
+        return;
+    }
     newnode->info = data;
 
     node *ptr = *start;
@@ -67,16 +83,36 @@ void insert_sorted(node **start, int data)
 }
 
 void delete_pos(node **start, int pos) {
-    node *ptr = *start;
+    if(*start == NULL) {
+        cout << "Underflow: List is empty" << endl;
+        return;
+    }
 
-    for(int i =0;i<pos-1;i++) {
+    if(pos <= 0) {
+        cout << "Invalid position" << endl;
+        return;
+    }
+
+    node *ptr;
+
+    // case1: deleting first node
+    if(pos == 1) {
+        ptr = *start;
+        *start = ptr->link;
+    }
+
+    for(int i =1;i<pos-1 && ptr->link != NULL; i++) {
         ptr = ptr->link;
+    }
+
+    if(ptr->link == NULL) {
+        cout << "Underflow: Position does not exist." << endl;
+        return;
     }
 
     node *deleteNode = ptr->link;
     ptr->link = ptr->link->link;
     delete(deleteNode);
-
 }
 
 void delete_item(node **start, int data) {
