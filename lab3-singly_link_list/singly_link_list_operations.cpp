@@ -7,6 +7,17 @@ struct node
     node *link;
 };
 
+void showlist(node *start)
+{
+    node *ptr = start;
+    while (ptr != NULL)
+    {
+        cout << ptr->info << " ";
+        ptr = ptr->link;
+    }
+    cout << endl;
+}
+
 int search_unsort(node **start, int key) {
     node *ptr = *start;
     int idx = 0;
@@ -174,17 +185,6 @@ void delete_item(node **start, int data) {
     node *deleteNode = ptr->link;
     ptr->link = ptr->link->link;
     delete(deleteNode);
-}
-
-void showlist(node *start)
-{
-    node *ptr = start;
-    while (ptr != NULL)
-    {
-        cout << ptr->info << " ";
-        ptr = ptr->link;
-    }
-    cout << endl;
 }
 
 int main()
