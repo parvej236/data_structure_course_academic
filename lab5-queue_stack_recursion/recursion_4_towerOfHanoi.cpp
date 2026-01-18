@@ -3,6 +3,7 @@ using namespace std;
 
 void TOWER(int N, char BEG, char AUX, char END) {
     if (N == 1) {
+        // Move dist 1 from BEG to END
         cout << BEG << " -> " << END << "\n";
         return;
     }
