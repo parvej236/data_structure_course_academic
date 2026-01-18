@@ -12,12 +12,50 @@ struct headernode {
     node* link;
 };
 
-void create_head(headernode** headstart) {
+void create_head(headernode **headstart) {
     headernode* newheadernode = new headernode;
     newheadernode->counter = 0;
-    newheadernode->link = NULL;
     newheadernode->name = "Circular header list";
+    newheadernode->link = (node *)newheadernode; // points to itself initially
     *headstart = newheadernode;
+}
+
+void showlist(headernode* start) {
+    cout << start->name << endl << "H_C: " << start->counter << endl;
+
+    node *ptr = start->link;
+
+    if(ptr == (node *)start) {
+        cout << "List is empty." << endl;
+        return;
+    }
+
+    while( ptr != (node *)start ) {
+        cout << ptr->info << "->";
+        ptr = ptr->link;
+    }
+    cout << "(back to head)" << endl;
+}
+
+void search_item(headernode* start, int key) {
+    
+    if(start->link == (node *)start) {
+        cout << "List is empty." << endl;
+        return;
+    }
+
+    node* ptr = start->link;
+    int positoin = 1;
+
+    while(ptr != (node *)start) {
+        if(ptr->info == key) {
+            cout << "Item found: " << key << ", at position " << positoin << endl;
+            return;
+        }
+        ptr = ptr->link;
+        positoin++;
+    }
+    cout << "Key " << key << " not found in the list." << endl;
 }
 
 void insert_big(headernode** headstart, int data) {
@@ -87,37 +125,18 @@ void insert_position(headernode** headstart, int data, int position) {
     (*headstart)->counter++;
 }
 
-void search_item(headernode* start, int key) {
-    if (start->link == NULL) {
-        cout << "Item not found: " << key << endl;
+void delete_item(headernode* start, int key) {
+
+    if (start->link == (node*)start) {
+        cout << "Underflow: List is empty." << endl;
         return;
     }
+
     node* ptr = start->link;
-    int count = 0;
-    // iterate using the header counter to avoid do-while
-    for (int i = 0; i < start->counter; ++i) {
-        if (ptr->info == key) {
-            cout << "Item found: " << key << ", at position " << count + 1 << endl;
-            return;
-        }
-        ptr = ptr->link;
-        count++;
-    }
-    cout << "Item not found: " << key << endl;
-}
-
-void delete_item(headernode** headstart, int key) {
-    if ((*headstart)->link == NULL) {
-        cout << "Item not found to delete: " << key << endl;
-        return;
-    }
-
-    node* ptr = (*headstart)->link;
-    node* prev = NULL;
+    node* prev = (node*)start; // previous node, starts at header
     bool found = false;
 
-    // iterate up to counter times instead of do-while
-    for (int i = 0; i < (*headstart)->counter; ++i) {
+    while(ptr != (node*)start) {
         if (ptr->info == key) {
             found = true;
             break;
@@ -126,72 +145,37 @@ void delete_item(headernode** headstart, int key) {
         ptr = ptr->link;
     }
 
-    if (!found) {
-        cout << "Item not found to delete: " << key << endl;
+    if(!found) {
+        cout << "Item " << key << " not found for deletion." << endl;
         return;
     }
 
-    if (ptr == (*headstart)->link) { 
-        if (ptr->link == ptr) {
-            (*headstart)->link = NULL;
-        } else {
-            node* last = (*headstart)->link;
-            while (last->link != (*headstart)->link) {
-                last = last->link;
-            }
-            last->link = ptr->link;
-            (*headstart)->link = ptr->link;
-        }
-    } else {
-        prev->link = ptr->link;
-    }
-
+    prev->link = ptr->link;
     delete ptr;
-    (*headstart)->counter--;
+
+    start->counter--;
     cout << "Item deleted: " << key << endl;
 }
 
-void showlist(headernode* start) {
-    cout << start->name << endl << "H_C: " << start->counter << endl;
-    if (start->link == NULL) {
-        cout << "List is empty." << endl;
-        return;
-    }
-    node* ptr = start->link;
-    // iterate using the header counter instead of do-while
-    for (int i = 0; i < start->counter; ++i) {
-        cout << ptr->info << "->";
-        ptr = ptr->link;
-    }
-    cout << "(back to head)" << endl;
-}
-
 int main() {
-    headernode* headstart;
-    create_head(&headstart);
+    headernode* START = nullptr;
+    create_head(&START);
 
-    // insert at beginning
-    insert_big(&headstart, 10);
-    insert_big(&headstart, 20);
-    insert_big(&headstart, 30);
-    showlist(headstart);
+    insert_big(&START, 10);   
+    insert_end(&START, 20);   
+    insert_end(&START, 30);   
+    insert_position(&START, 15, 2); 
 
-    // insert at end
-    insert_end(&headstart, 40);
-    insert_end(&headstart, 50);
-    showlist(headstart);
+    showlist(START);
 
-    // insert at position
-    insert_position(&headstart, 25, 3);
-    showlist(headstart);
+    search_item(START, 15);
+    search_item(START, 50);
 
-    // search item
-    search_item(headstart, 25);
-    search_item(headstart, 100);
+    delete_item(START, 10);
+    delete_item(START, 30);
+    delete_item(START, 50);
 
-    // delete item
-    delete_item(&headstart, 20);
-    showlist(headstart);
+    showlist(START);
 
     return 0;
 }

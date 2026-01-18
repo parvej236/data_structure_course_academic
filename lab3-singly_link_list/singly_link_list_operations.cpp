@@ -161,30 +161,28 @@ void delete_item(node **start, int data) {
         return;
     }
 
-    node *ptr;
+    node *prev = NULL;
+    node *curr = *start;
 
-    // case1: deleting first node
-    if((*start)->info == data) {
-        ptr = *start;
-        *start = ptr->link;
-        delete(ptr);
+    while(curr != NULL && curr->info != data) {
+        prev = curr;
+        curr = curr->link;
+    }
+
+    if(curr == NULL) {
+        cout << "Item not found to delete: " << data << endl;
         return;
     }
 
-    ptr = *start;
-
-    while(ptr->link != NULL && ptr->link->info != data) {
-        ptr = ptr->link;
+    if(prev == NULL) {
+        // deleting first node
+        *start = curr->link;
+    } else {
+        prev->link = curr->link;
     }
 
-    if(ptr->link == NULL) {
-        cout << "Item not found in the list." << endl;
-        return;
-    }
-
-    node *deleteNode = ptr->link;
-    ptr->link = ptr->link->link;
-    delete(deleteNode);
+    delete(curr);
+    cout << "Item deleted: " << data << endl;    
 }
 
 int main()
