@@ -17,7 +17,7 @@ string infixToPostfix(string infix) {
             postfix += c;
         }
         else if (c == '(') {
-            st.push(c);
+            st.push(c); 
         }
         else if (c == ')') {
             while (!st.empty() && st.top() != '(') {
