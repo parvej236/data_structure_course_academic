@@ -116,10 +116,30 @@ void delete_pos(node **start, int pos) {
 }
 
 void delete_item(node **start, int data) {
-    node *ptr = *start;
+    if(*start == NULL) {
+        cout << "Underflow: List is empty" << endl;
+        return;
+    }
 
-    while(ptr->link->info != data) {
+    node *ptr;
+
+    // case1: deleting first node
+    if((*start)->info == data) {
+        ptr = *start;
+        *start = ptr->link;
+        delete(ptr);
+        return;
+    }
+
+    ptr = *start;
+
+    while(ptr->link != NULL && ptr->link->info != data) {
         ptr = ptr->link;
+    }
+
+    if(ptr->link == NULL) {
+        cout << "Item not found in the list." << endl;
+        return;
     }
 
     node *deleteNode = ptr->link;
