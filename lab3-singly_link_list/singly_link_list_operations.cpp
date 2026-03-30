@@ -62,21 +62,27 @@ void insert_beg(node **start, int data)
 
 void insert_end(node **start, int data)
 {
-    node *newnode = new (nothrow) node;
-    if(newnode == nullptr) {
-        cout << "Overflow: Memory not available" << endl;
+    // Step 1: Create new node
+    node *newnode = new node;
+    newnode->info = data;
+    newnode->link = NULL;
+
+    // Step 2: If list is empty
+    if (*start == NULL)
+    {
+        *start = newnode;
         return;
     }
-    newnode->info = data;
 
+    // Step 3: Traverse to last node
     node *ptr = *start;
     while (ptr->link != NULL)
     {
         ptr = ptr->link;
     }
 
+    // Step 4: Insert at end
     ptr->link = newnode;
-    newnode->link = NULL;
 }
 
 void insert_position(node **start, int data, int pos)
