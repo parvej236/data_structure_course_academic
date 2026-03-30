@@ -102,7 +102,7 @@ void insert_position(node **start, int data, int pos)
 
     node *ptr = *start;
 
-    for(int i =0;i<pos-1;i++) {
+    for(int i =0;i<=pos-2;i++) {
         ptr = ptr->link;
     }
 
