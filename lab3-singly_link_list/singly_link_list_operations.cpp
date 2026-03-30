@@ -143,37 +143,48 @@ void insert_sorted(node **start, int data)
     ptr->link = newnode;
 }
 
-void delete_pos(node **start, int pos) {
-    if(*start == NULL) {
+void delete_pos(node **start, int pos)
+{
+    if (*start == NULL)
+    {
         cout << "Underflow: List is empty" << endl;
         return;
     }
 
-    if(pos <= 0) {
+    if (pos <= 0)
+    {
         cout << "Invalid position" << endl;
         return;
     }
 
-    node *ptr;
-
-    // case1: deleting first node
-    if(pos == 1) {
-        ptr = *start;
-        *start = ptr->link;
+    // Case 1: Delete first node
+    if (pos == 1)
+    {
+        node *temp = *start;
+        *start = (*start)->link;
+        delete temp;
+        return;
     }
 
-    for(int i =1;i<pos-1 && ptr->link != NULL; i++) {
+    node *ptr = *start;
+
+    // Traverse to (pos-1)th node
+    for (int i = 1; i < pos - 1 && ptr != NULL; i++)
+    {
         ptr = ptr->link;
     }
 
-    if(ptr->link == NULL) {
+    // If position is out of range
+    if (ptr == NULL || ptr->link == NULL)
+    {
         cout << "Underflow: Position does not exist." << endl;
         return;
     }
 
-    node *deleteNode = ptr->link;
-    ptr->link = ptr->link->link;
-    delete(deleteNode);
+    // Delete node at position
+    node *temp = ptr->link;
+    ptr->link = temp->link;
+    delete temp;
 }
 
 void delete_item(node **start, int data) {
