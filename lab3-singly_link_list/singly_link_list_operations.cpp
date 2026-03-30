@@ -112,18 +112,33 @@ void insert_position(node **start, int data, int pos)
 
 void insert_sorted(node **start, int data)
 {
+    // Create new node
     node *newnode = new (nothrow) node;
-    if(newnode == nullptr) {
+    if (newnode == nullptr)
+    {
         cout << "Overflow: Memory not available" << endl;
         return;
     }
+
     newnode->info = data;
 
+    // Case 1: Empty list OR insert at beginning
+    if (*start == NULL || data < (*start)->info)
+    {
+        newnode->link = *start;
+        *start = newnode;
+        return;
+    }
+
+    // Case 2: Traverse to find correct position
     node *ptr = *start;
-    while(ptr->link->info < data)
+
+    while (ptr->link != NULL && ptr->link->info < data)
     {
         ptr = ptr->link;
     }
+
+    // Insert new node
     newnode->link = ptr->link;
     ptr->link = newnode;
 }
